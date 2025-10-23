@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "Animation.h"
 #include <box2d/box2d.h>
 #include <SDL3/SDL.h>
 
@@ -45,5 +46,6 @@ public:
 private: 
 	b2Vec2 velocity;
 	// L10: TODO 4: Declare an AnimationSet to hold all player animations
+	AnimationSet anims;
 
 };
