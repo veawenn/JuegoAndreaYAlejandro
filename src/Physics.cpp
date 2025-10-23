@@ -13,7 +13,7 @@
 Physics::Physics() : Module()
 {
     world = b2_nullWorldId;
-    debug = true; // toggle with F1
+    debug = false; // toggle with F9
 }
 
 // Destructor
@@ -31,6 +31,7 @@ bool Physics::Start()
     wdef.gravity.x = GRAVITY_X;
     wdef.gravity.y = -GRAVITY_Y;
     world = b2CreateWorld(&wdef);
+    godmode = false;
 
     return true;
 }
@@ -185,8 +186,26 @@ bool Physics::PostUpdate()
     bool ret = true;
 
     // Activate or deactivate debug mode
-    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
         debug = !debug;
+
+    if (godmode) {
+        if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+            godmode = false;
+            wdef.gravity.x = GRAVITY_X;
+            wdef.gravity.y = -GRAVITY_Y;
+        }
+    }
+    else {
+        if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+            godmode = true;
+            wdef.gravity.x = 0;
+            wdef.gravity.y = 0;
+        }
+
+    }
+
+
 
     // Debug draw via Box2D 3.x callbacks
     if (debug)
