@@ -30,10 +30,10 @@ bool Player::Start() {
 
 	//L03: TODO 2: Initialize Player parameters
 	//L10: TODO 3; Load the spritesheet of the player
-	texture = Engine::GetInstance().textures->Load("Assets/Textures/player2_spritesheet.png");
+	texture = Engine::GetInstance().textures->Load("Assets/Textures/player1.png");
 
 	//L10: TODO 3: Load the spritesheet animations from the TSX file
-	anims.LoadFromTSX("Assets/Textures/player2_spritesheet.png", {})
+
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	texW = 32;
 	texH = 32;
