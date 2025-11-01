@@ -31,6 +31,8 @@ public:
 
 	//Declare player parameters
 	float speed = 5.0f;
+	int nJumps = 2;
+	bool isFacingLeft = true;
 	SDL_Texture* texture = NULL;
 
 	int texW, texH;
@@ -42,7 +44,6 @@ public:
 	PhysBody* pbody;
 	float jumpForce = 2.5f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
-	int nJumps = 2;
 	bool doubleJumpAvailable = false; // Flag to check if the player is currently jumping
 
 private: 

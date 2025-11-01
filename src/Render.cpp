@@ -118,7 +118,7 @@ void Render::ResetViewPort()
 }
 
 // Blit to screen
-bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool rotated, float speed, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
 	int scale = Engine::GetInstance().window->GetScale();
@@ -166,7 +166,16 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	}
 
 	// SDL3: returns bool; map to int-style check
-	int rc = SDL_RenderTextureRotated(renderer, texture, src, &rect, angle, p, SDL_FLIP_NONE) ? 0 : -1;
+	
+	int rc;
+
+	if (rotated == true) {
+		rc = SDL_RenderTextureRotated(renderer, texture, src, &rect, angle, p, SDL_FLIP_HORIZONTAL) ? 0 : -1;
+	}
+	else {
+		rc = SDL_RenderTextureRotated(renderer, texture, src, &rect, angle, p, SDL_FLIP_NONE) ? 0 : -1;
+	}
+
 	if (rc != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderTextureRotated error: %s", SDL_GetError());
