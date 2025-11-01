@@ -81,15 +81,30 @@ bool Player::Update(float dt)
 		//L10: TODO 6: Update the animation based on the player's state
 		anims.SetCurrent("jump");
 		isJumping = true;
+		nJumps--;
 	}
 
 	// Preserve vertical speed while jumping
 	if (isJumping == true) {
+		
 		velocity.y = physics->GetYVelocity(pbody);
+		if (Engine::GetInstance().input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
+			doubleJumpAvailable = true;
+		}
 	}
 
 	// Apply velocity via helper
 	physics->SetLinearVelocity(pbody, velocity);
+
+	//Double Jump
+	if (doubleJumpAvailable == true && nJumps == 1) {
+		if (Engine::GetInstance().input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == true) {
+			physics->ApplyLinearImpulseToCenter(pbody, 0.0f, -jumpForce, true);
+			nJumps--;
+			doubleJumpAvailable = false;
+
+		}
+	}
 
 	// L10: TODO 5: Update the animation based on the player's state (moving, jumping, idle)
 	anims.Update(dt);
@@ -129,6 +144,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PLATFORM");
 		//reset the jump flag when touching the ground
 		isJumping = false;
+		doubleJumpAvailable = false;
+		nJumps = 2;
+
 		//L10: TODO 6: Update the animation based on the player's state
 		anims.SetCurrent("idle");
 		break;

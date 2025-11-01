@@ -192,15 +192,13 @@ bool Physics::PostUpdate()
     if (godmode) {
         if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
             godmode = false;
-            wdef.gravity.x = GRAVITY_X;
-            wdef.gravity.y = -GRAVITY_Y;
+            
         }
     }
     else {
         if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
             godmode = true;
-            wdef.gravity.x = 0;
-            wdef.gravity.y = 0;
+           
         }
 
     }
